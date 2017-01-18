@@ -13,8 +13,16 @@
     console.log("init started!");
     var contractAddress = "0xe48a6265a07c7c5324ba3826fb019dd804fecfd7";
     var abi = [{"constant":true,"inputs":[],"name":"value","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"newValue","type":"uint256"}],"name":"setValue","outputs":[],"payable":false,"type":"function"}]
-    var value = web3.eth.contract(abi).at(contractAddress).value.call();
-    console.log("value =" + value);
+    var value;
+
+    web3.eth.contract(abi).at(contractAddress).value.call(function(error, result){
+        if(!error) {
+            console.log(result)
+            value = result;
+        } else {
+            console.error(error);
+        }
+    });
 
     function bump() {
         web3.eth.contract(abi).at(contractAddress).setValue(value+1,{from:web3.eth.accounts[0]});
