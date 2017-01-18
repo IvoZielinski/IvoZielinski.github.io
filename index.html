@@ -25,7 +25,13 @@
     });
 
     function bump() {
-        web3.eth.contract(abi).at(contractAddress).setValue(value+1,{from:web3.eth.accounts[0]});
+        web3.eth.contract(abi).at(contractAddress).setValue(value+1,{from:web3.eth.accounts[0]},unction(error, result){
+            if(!error) {
+                console.log(result)
+            } else {
+                console.error(error);
+            }
+        });
     }
     console.log("init finished!");
 </script>
